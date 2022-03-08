@@ -39,3 +39,30 @@
   - 존재 이유 -> IP는 기억하기 어렵고 변경될 수 있다.
   - DNS 서버에 도메인 명(ex google.com)을 등록할 수 있다. -> 통신시에 도메인 이름부터 찾고 IP를 찾는다.
   
+<br>
+  
+## URI와 웹 브라우저 요청 흐름
+
+### URI(Uniform Resource Identifier)
+- URI는 Locator(URL), Name(URN) 또는 둘 다 추가로 분류 될 수 있다. <br>
+-> URI가 가장 큰 개념이고 URL과 URN이 속해있다.
+  * URL은 리소스의 위치를 뜻한다. (웹 브라우저)
+  * URN은 리소스의 이름을 뜻한다. (거의 안 씀)
+- Uniform : 리소스를 식별하는 통일된 방식, Resource : 자원, Identifier : 식별
+- URI와 URL을 보통 같은 의미로 사용한다.
+  
+### URL 사용형태 
+scheme://[userinfo@]host[:port][/path][?query][#fragment]
+- userinfo : 거의 사용되지 않는다.
+- port : 일반적으로 생략되며 http는 80 https는 443
+- path : 계층적 구조의 리소스 경로
+- query : key=value 형태, ?로시작 &로 추가 가능하며 query parameter, string으로 불림
+- fragment : html 내부 북마크에 사용되며 잘 사용되지 않는다.
+  
+### 웹 브라우저의 요청 흐름
+1. 웹 브라우저가 HTTP 메세지 생성
+2. Socket 라이브러리를 통해 전달
+  A. TCP/IP 연결(IP, PORT)
+  B. 데이터 전달
+3. TCP/IP 패킷 생성, HTTP 메세지 포함
+ 
