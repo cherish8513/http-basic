@@ -65,4 +65,66 @@ scheme://[userinfo@]host[:port][/path][?query][#fragment]
   A. TCP/IP 연결(IP, PORT)
   B. 데이터 전달
 3. TCP/IP 패킷 생성, HTTP 메세지 포함
+  
+  
+## HTTP(HyperText Transfer Protocol)
+  
+### HTTP 역사
+- HTTP/0.9 1991년: GET 메서드만 지원, HTTP 헤더 X
+- HTTP/1.0 1996년: 메서드, 헤더 추가
+- HTTP/1.1 1997년: 현재 가장 많이 사용되고 있는 형태
+- HTTP/2 2015년: 성능 개선
+- HTTP/3 현재: TCP 대신 UDP 사용, 성능 개선
+
+### HTTP 특징
+- 클라이언트 서버 구조
+  - Request Response 구조
+  - 클라이언트는 서버에 요청을 하고 응답을 대기
+  - 서버가 요청에 대한 결과를 만들어서 응답
+- 무상태 프로토콜 지향(Stateless)
+  - 서버가 클라이언트의 상태 보존X
+  - 서버 확장성이 높음(Scale out)
+  - 클라이언트가 추가 데이터 전송
+  - 상태 유지를 완전히 대체하기 힘듬(ex 로그인)
+- 비 연결성
+  - 연결 유지 X
+  - 일반적으로 초 단위의 빠른 속도로 응답
+  - 동시에 처리하는 요청은 사용 수에 비해 매우 적음
+  - 최소한의 자원 사용
+  - TCP/IP 연결을 새로 맺어야함 -> 3 way handshake 시간 추가
+  - HTML 요청시(js, css, 이미지 등) 수많은 자원이 함께 다운로드<br>
+  -> HTML을 다 받을 때 까지 지속 연결(Persistent Connections)로 문제 해결(HTTP2, HTTP3(UDP라 연결 속도도 줄임)은 더욱 최적화)
+
+### HTTP 메시지 구조
+start-line <br>
+\* (header-field CRLF) <br>
+(CRLF) <br>
+[ message-body ]
+- start-line = request-line(요청) / status-line(응답)
+- request-line = method SP(공백) request-target SP HTTP-version CRLF(엔터)
+- 요청시 start-line에 HTTP 메서드, URL 리소스가 들어감
+- 응답시 start-line에 HTTP 상태 코드가 들어감
+- header 에는 메타 정보들이 들어감
+  
+### HTTP 메서드 속성
+- 안전(Safe Methods): 리소스 변경이 없다(GET, HEAD)
+- 멱등(Idempotent Methods): 몇 번을 호출하든 결과가 같다(GET, PUT(덮어씀), DELETE)
+  -> 자동 복구 매커니즘의 근거로 사용
+- 캐시 가능(Cacheable Methos): GET, HEAD
+
+### HTTP 메서드 설계
+- 문서
+  - 단일 개념
+- 컬렉션
+  - 서버가 관리하는 리소스 디렉토리
+  - 서버가 리소스의 URI를 생성하고 관리
+- 스토어
+  - 클라이언트가 관리하는 자원 저장소
+  - 클라이언트가 리소스의 URI를 알고 관리
+- 컨트롤러, 컨트롤 URI
+  - 문서, 컬렉션, 스토어로 해결하기 힘든 추가 프로세스 실행
+  - 동사를 직접 사용(ex: /members/{id}/delete)
+  
+### HTTP/1.1
+- TCP를 주로 사용
  
